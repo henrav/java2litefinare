@@ -15,7 +15,7 @@ public class main extends Application {
 
 
     public void start(Stage stage) throws Exception{
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("läggtill.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("startsidan.fxml")));
         stage.setScene(new Scene(parent));
         stage.show();
     }

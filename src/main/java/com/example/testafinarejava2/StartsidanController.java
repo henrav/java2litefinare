@@ -67,71 +67,84 @@ public class StartsidanController extends ControllerController implements Initia
 
 
 
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inloggadFrågetecken(användare, inloggadsom, loggain);
-        SessionManager sessionManager = new SessionManager();
         try {
-            if (sessionManager.isUserStaff()){
-                Label styggalabel = new Label("kolla vilka som e stygga och inte lämnat tillbaka böcker i tid:");
-                styggalabel.setStyle("-fx-font-size: 20px;");
-                Button styggaknapp = new Button("kolla stygga");
-                styggaknapp.setStyle("-fx-font-size: 20px;");
-                startsidabody.add(styggalabel, 0, 1);
-                startsidabody.add(styggaknapp, 2, 1);
-
-                Label editLabel = new Label("Edit books:");
-                editLabel.setStyle("-fx-font-size: 20px;");
-                Button editButton = new Button("Edit");
-                editButton.setStyle("-fx-font-size: 20px;");
-                startsidabody.add(editLabel, 0, 2);
-                startsidabody.add(editButton, 2, 2);
-                editButton.setOnAction(event -> {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("läggtill.fxml"));
-                        Parent root = loader.load();
-                        Scene currentScene = editButton.getScene();
-                        currentScene.setRoot(root);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                Label addLabel = new Label("Add books:");
-                addLabel.setStyle("-fx-font-size: 20px;");
-                Button addButton = new Button("Add");
-                addButton.setStyle("-fx-font-size: 20px;");
-                startsidabody.add(addLabel, 0, 3);
-                startsidabody.add(addButton, 2, 3);
-                addButton.setOnAction(event -> {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("nybok.fxml"));
-                        Parent root = loader.load();
-                        Scene currentScene = addButton.getScene();
-                        currentScene.setRoot(root);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-
-
-                styggaknapp.setOnAction(event -> {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("styggakunder.fxml"));
-                        Parent root = loader.load();
-                        Scene currentScene = styggaknapp.getScene();
-                        currentScene.setRoot(root);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+            setupStaffFeatures();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    private void setupStaffFeatures() throws SQLException, FileNotFoundException {
+        SessionManager sessionManager = new SessionManager();
+        if (sessionManager.isUserStaff()) {
+            addStyggaknapp();
+            addEditButton();
+            addAddButton();
+        }
+    }
 
+    private void addStyggaknapp() {
+        Label styggalabel = new Label("kolla vilka som e stygga och inte lämnat tillbaka böcker i tid:");
+        styggalabel.setStyle("-fx-font-size: 20px;");
+        Button styggaknapp = new Button("kolla stygga");
+        styggaknapp.setStyle("-fx-font-size: 20px;");
+        startsidabody.add(styggalabel, 0, 1);
+        startsidabody.add(styggaknapp, 2, 1);
+
+        styggaknapp.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("styggakunder.fxml"));
+                Parent root = loader.load();
+                Scene currentScene = styggaknapp.getScene();
+                currentScene.setRoot(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void addEditButton() {
+        Label editLabel = new Label("Edit books:");
+        editLabel.setStyle("-fx-font-size: 20px;");
+        Button editButton = new Button("Edit");
+        editButton.setStyle("-fx-font-size: 20px;");
+        startsidabody.add(editLabel, 0, 2);
+        startsidabody.add(editButton, 2, 2);
+
+        editButton.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("läggtill.fxml"));
+                Parent root = loader.load();
+                Scene currentScene = editButton.getScene();
+                currentScene.setRoot(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void addAddButton() {
+        Label addLabel = new Label("Add books:");
+        addLabel.setStyle("-fx-font-size: 20px;");
+        Button addButton = new Button("Add");
+        addButton.setStyle("-fx-font-size: 20px;");
+        startsidabody.add(addLabel, 0, 3);
+        startsidabody.add(addButton, 2, 3);
+
+        addButton.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("nybok.fxml"));
+                Parent root = loader.load();
+                Scene currentScene = addButton.getScene();
+                currentScene.setRoot(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 

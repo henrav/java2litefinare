@@ -106,6 +106,10 @@ public class SökresultatController extends ControllerController implements Init
         lånaKnappar.add(låna3);
         lånaKnappar.add(låna4);
         lånaKnappar.add(låna5);
+        söktext.setDisable(true);
+        sökknapp.setDisable(true);
+        söktext.setOpacity(0);
+        sökknapp.setOpacity(0);
         removeLastSearch();
 
     }
@@ -129,70 +133,82 @@ public class SökresultatController extends ControllerController implements Init
 
     @FXML
     public void sökNågot(ActionEvent actionEvent) {
-        try{
-
+        try {
             removeLastSearch();
-            DBconnection.connect();
-            söktext.setOpacity(0);
-            sökknapp.setOpacity(0);
-            söktext.setDisable(true);
-            sökknapp.setDisable(true);
 
-            String sql = "SELECT ISBN, MIN(Title) as Title, MIN(First_Name) as First_Name FROM sys.Item JOIN Item_Author ON Item_Author.Item_ID = Item.Item_ID JOIN Author on Author.Author_ID = Item_Author.Author_ID WHERE Title LIKE '%"+söktext1.getText()+"%' GROUP BY ISBN";
-            ResultSet result = DBconnection.executeQuery(sql);
+            String title = söktext1.getText();
+            ResultSet result = sökBöckerTitel(title);
 
-            if (!result.next()){
+            if (!result.next()) {
                 visarresultat.setText("Inga resultat");
                 visarresultat.translateXProperty().set(50);
-            }else{
-                visarresultat.setText(söktext1.getText());
-
+            } else {
+                visarresultat.setText(title);
             }
-
-            sättResultat(result, sakensnamn);
-            DBconnection.close();
+            visaSökresultat(result);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    @Deprecated
-    private void sättResultat(ResultSet resultat, List<Label> labels) throws SQLException {
+
+    private ResultSet sökBöckerTitel(String titel) throws SQLException {
+        DBconnection.connect();
+        String sql = "SELECT ISBN, MIN(Title) as Title, MIN(First_Name) as First_Name FROM sys.Item JOIN Item_Author ON Item_Author.Item_ID = Item.Item_ID JOIN Author on Author.Author_ID = Item_Author.Author_ID WHERE Title LIKE '%" + titel + "%' GROUP BY ISBN";
+        return DBconnection.executeQuery(sql);
+    }
+
+    private void visaSökresultat(ResultSet resultat) throws SQLException {
         int i = 0;
-        while (resultat.next() && i < labels.size()) {
-            Bok bok = new Bok();
-            Author author = new Author();
-            author.setFirstName(resultat.getString("First_Name"));
-            bok.setAuthor(author);
-            bok.setNamn(resultat.getString("Title"));
-            bok.setISBN(resultat.getString("ISBN"));
-            labels.get(i).setText(bok.getNamn());
-            labels.get(i).setVisible(true);
-            labels.get(i).setDisable(false);
-            författareLabels.get(i).setText(bok.getAuthor().getFirstName());
-            lånaKnappar.get(i).setVisible(true);
-            lånaKnappar.get(i).setDisable(false);
-            författareLabels.get(i).setVisible(true);
-            författareLabels.get(i).setDisable(false);
-
-            lånaKnappar.get(i).setOnAction(e -> {
-                try{
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("lånasidan.fxml"));
-                    Parent root = loader.load();
-                    LånasidanController controller = loader.getController();
-                    controller.getBokInfo(bok);
-                    Scene currentScene = loggain.getScene();
-                    currentScene.setRoot(root);
-
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            });
-
-            labels.get(i).setTooltip(new Tooltip(bok.getNamn()));
+        while (resultat.next() && i < sakensnamn.size()) {
+            Bok bok = skapaBokFrånResultat(resultat);
+            visaBokInfo(bok, i);
+            läggTillLånaKnappHandling(bok, i);
             i++;
         }
+        DBconnection.close();
     }
+
+    private Bok skapaBokFrånResultat(ResultSet resultat) throws SQLException {
+        Bok bok = new Bok();
+        Author författare = new Author();
+        författare.setFirstName(resultat.getString("First_Name"));
+        bok.setAuthor(författare);
+        bok.setNamn(resultat.getString("Title"));
+        bok.setISBN(resultat.getString("ISBN"));
+        return bok;
+    }
+
+    private void visaBokInfo(Bok bok, int i) {
+        sakensnamn.get(i).setText(bok.getNamn());
+        sakensnamn.get(i).setVisible(true);
+        sakensnamn.get(i).setDisable(false);
+        författareLabels.get(i).setText(bok.getAuthor().getFirstName());
+        författareLabels.get(i).setVisible(true);
+        författareLabels.get(i).setDisable(false);
+        sakensnamn.get(i).setTooltip(new Tooltip(bok.getNamn()));
+    }
+
+    private void läggTillLånaKnappHandling(Bok bok, int i) {
+        lånaKnappar.get(i).setVisible(true);
+        lånaKnappar.get(i).setDisable(false);
+        lånaKnappar.get(i).setTooltip(new Tooltip("Låna " + bok.getNamn()));
+        lånaKnappar.get(i).setOnAction(e -> {
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("lånasidan.fxml"));
+                Parent root = loader.load();
+                LånasidanController controller = loader.getController();
+                controller.getBokInfo(bok);
+                Scene currentScene = loggain.getScene();
+                currentScene.setRoot(root);
+
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+    }
+
+
     @FXML
     public void loggaIn(ActionEvent actionEvent) throws IOException {
         loggaIn(loggain.getScene());
@@ -211,7 +227,5 @@ public class SökresultatController extends ControllerController implements Init
     }
 
 
-    @FXML
-    public void loggaUtSak(Event event) {
-    }
+
 }
