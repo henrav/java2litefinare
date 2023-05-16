@@ -53,7 +53,7 @@
                   <Button fx:id="loggain" mnemonicParsing="false" onAction="#loggaInWalla" text="logga in" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                   <Button fx:id="glömt" mnemonicParsing="false" text="glömt lösenord" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Button fx:id="registrera" mnemonicParsing="false" text="Registrera" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                  <Button fx:id="startsida" onAction="#hemKnapp" mnemonicParsing="false" text="StartSida" GridPane.halignment="RIGHT" GridPane.rowIndex="2" >
+                  <Button fx:id="startsida" onAction="#hem" mnemonicParsing="false" text="StartSida" GridPane.halignment="RIGHT" GridPane.rowIndex="2" >
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>

@@ -89,29 +89,8 @@ public class EditController extends ControllerController implements Initializabl
         return förstaItemID;
     }
 
-    @FXML
-    public void sökResultat(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sökresultat.fxml"));
-        Parent root = loader.load();
-        Scene currentScene = sökknapp.getScene();
-        currentScene.setRoot(root);
-        SökresultatController controller = loader.getController();
-        controller.setSöktext(söktext.getText());
-    }
-
-    @FXML
-    public void hemKnapp(Event event) throws IOException {
-        hemKnapp(bibliotek.getScene());
-    }
-
-    @FXML
-    public void loggaIn(Event event) throws IOException {
-        loggaIn(bibliotek.getScene());
-    }
-
-    @FXML
-    public void loggautsaken(Event event) throws IOException {
-        loggaUt(bibliotek.getScene());
+    public void sök() throws IOException {
+        sökResultat(söktext.getText());
     }
 
 
@@ -219,10 +198,7 @@ public class EditController extends ControllerController implements Initializabl
         });
         tillbaka.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("läggtill.fxml"));
-                Parent root = loader.load();
-                Scene currentScene = sökknapp.getScene();
-                currentScene.setRoot(root);
+                bytSida("läggtill.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -70,28 +70,10 @@ public class LäggtillController extends ControllerController implements Initial
 
     @FXML
     public void sökResultat(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sökresultat.fxml"));
-        Parent root = loader.load();
-        Scene currentScene = sökknapp.getScene();
-        currentScene.setRoot(root);
-        SökresultatController controller = loader.getController();
-        controller.setSöktext(söktext.getText());
+        sökResultat(söktext.getText());
     }
 
-    @FXML
-    public void hemKnapp(Event event) throws IOException {
-        hemKnapp(bibliotek.getScene());
-    }
 
-    @FXML
-    public void loggaIn(Event event) throws IOException {
-        loggaIn(bibliotek.getScene());
-    }
-
-    @FXML
-    public void loggaUtSak(Event event) throws IOException {
-        loggaUt(bibliotek.getScene());
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

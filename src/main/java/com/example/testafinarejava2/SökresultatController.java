@@ -208,23 +208,11 @@ public class SökresultatController extends ControllerController implements Init
         });
     }
 
-
-    @FXML
-    public void loggaIn(ActionEvent actionEvent) throws IOException {
-        loggaIn(loggain.getScene());
-    }
-
-    @FXML
-    private void hemKnapp() throws IOException {
-        hemKnapp(bibliotek.getScene());
-    }
     public void setSöktext(String text){
         söktext1.setText(text);
         sökknapp1.fire();
     }
-    public void loggaUtSak(MouseEvent mouseEvent) throws IOException {
-        loggaUt(loggain.getScene());
-    }
+
 
 
 

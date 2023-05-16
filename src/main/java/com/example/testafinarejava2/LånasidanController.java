@@ -53,18 +53,11 @@ public class LånasidanController extends ControllerController implements Initia
     }
 
     @FXML
-    public void sökResultat(ActionEvent actionEvent) {
+    public void sökResultat(ActionEvent actionEvent) throws IOException {
+        sökResultat(söktext.getText());
     }
 
-    @FXML
-    public void loggaIn(Event event) throws IOException {
-        loggaIn(sökknapp.getScene());
-    }
 
-    @FXML
-    public void loggautsaken(Event event) throws IOException {
-        loggaUt(loggautsak.getScene());
-    }
 
     @FXML
     public void lånaKnappen(ActionEvent actionEvent) throws IOException {
@@ -78,7 +71,7 @@ public class LånasidanController extends ControllerController implements Initia
             Alert erroralert = new Alert(Alert.AlertType.ERROR, "Du måste vara inloggad för att låna", loggain);
             erroralert.setOnCloseRequest(e -> {
                 try {
-                    loggaIn(loggautsak.getScene());
+                    loggaIn();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -92,10 +85,7 @@ public class LånasidanController extends ControllerController implements Initia
     @FXML
     public void reserveraKnappen(ActionEvent actionEvent) {
     }
-    @FXML
-    public void hemKnapp() throws IOException {
-        hemKnapp(loggautsak.getScene());
-    }
+
     public void getBokInfo(Bok bok) {
         författarnamn.setText(bok.getAuthor().getFirstName());
         ISBN.setText(bok.getISBN());

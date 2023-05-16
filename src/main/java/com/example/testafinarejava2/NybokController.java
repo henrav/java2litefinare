@@ -3,7 +3,10 @@ package com.example.testafinarejava2;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -54,28 +57,12 @@ public class NybokController extends ControllerController implements Initializab
     private TextField itemstatusText;
     @FXML
     private TextField renttimeText;
-    @FXML
-    private Button idSave;
-    @FXML
-    private Button TitleSave;
-    @FXML
-    private Button isbnSave;
-    @FXML
-    private Button barcodeSave;
-    @FXML
-    private Button locationSave;
-    @FXML
-    private Button descriptionSave;
-    @FXML
-    private Button itemtypeSave;
-    @FXML
-    private Button renttimeSave;
-    @FXML
-    private Button itemstatusSave;
+
     @FXML
     private Button tillbaka;
     @FXML
     private Button Återställ;
+    private Bok bok;
 
     @FXML
     private TextField författare;
@@ -87,23 +74,13 @@ public class NybokController extends ControllerController implements Initializab
     }
 
     @FXML
-    public void sökResultat(ActionEvent actionEvent) {
+    public void sökResultat(ActionEvent actionEvent) throws IOException {
+        sökResultat(söktext.getText());
     }
 
-    @FXML
-    public void hemKnapp(Event event) throws IOException {
-        hemKnapp(bibliotek.getScene());
-    }
 
-    @FXML
-    public void loggaIn(Event event) throws IOException {
-        loggaIn(bibliotek.getScene());
-    }
 
-    @FXML
-    public void loggautsaken(Event event) throws IOException {
-        loggaIn(bibliotek.getScene());
-    }
+
     public void läggTill() throws SQLException {
         Bok bok = new Bok();
         Author author = new Author();
@@ -120,5 +97,18 @@ public class NybokController extends ControllerController implements Initializab
         bok.setAuthor(author);
         DBconnection.addNewBok(bok);
     }
+    public void återställ() {
+        författare.setText("");
+        barcodeText.setText("");
+        titleText.setText("");
+        isbnText.setText("");
+        locationText.setText("");
+        descriptionText.setText("");
+        itemtypeText.setText("");
+        itemstatusText.setText("");
+        renttimeText.setText("");
+    }
+
+
 
 }

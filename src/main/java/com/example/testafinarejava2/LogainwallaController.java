@@ -67,11 +67,5 @@ public class LogainwallaController extends ControllerController implements Initi
     }
 
 
-    @FXML
-    public void hemKnapp(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("startsidan.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene currentScene = loggain.getScene();
-        currentScene.setRoot(root);
-    }
+
 }

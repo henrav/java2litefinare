@@ -1,48 +1,22 @@
 package com.example.testafinarejava2;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 
 abstract class ControllerController {
     @FXML
     private Label bibliotek;
 
 
-    public void loggaUt(Scene scene) throws IOException {
-        if (SessionManager.isAuthenticated()) {
-            SessionManager.logout();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("startsidan.fxml"));
-            Parent root = loader.load();
-            Scene currentScene = scene();
-            currentScene.setRoot(root);
-        }
-    }
 
-    public void loggaIn(Scene scene) throws IOException {
-        if (!SessionManager.isAuthenticated()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("logainwalla.fxml"));
-            Parent root = loader.load();
-            Scene currentScene = scene();
-            currentScene.setRoot(root);
-        }
-    }
-
-    public void hemKnapp(Scene scene) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("startsidan.fxml"));
-        Parent root = loader.load();
-        Scene currentScene = scene();
-        currentScene.setRoot(root);
-    }
 
     public Label inloggadFrågetecken(Label användare, Label inloggadsom, Label loggain) {
         SessionManager session = new SessionManager();
@@ -85,6 +59,45 @@ abstract class ControllerController {
         });
         return label;
     }
+   public void hem() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("startsidan.fxml"));
+        Parent root = loader.load();
+        Scene currentScene = bibliotek.getScene();
+        currentScene.setRoot(root);
+   }
+   public void loggaIn() throws IOException {
+       if (!SessionManager.isAuthenticated()) {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("logainwalla.fxml"));
+           Parent root = loader.load();
+           Scene currentScene = bibliotek.getScene();
+           currentScene.setRoot(root);
+       }
+
+
+   }
+   public void loggaUt() throws IOException {
+       if (SessionManager.isAuthenticated()) {
+           SessionManager.logout();
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("startsidan.fxml"));
+           Parent root = loader.load();
+           Scene currentScene = bibliotek.getScene();
+           currentScene.setRoot(root);
+       }
+   }
+   public void sökResultat(String s) throws IOException {
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("sökresultat.fxml"));
+       Parent root = loader.load();
+       SökresultatController controller = loader.getController();
+       controller.setSöktext(s);
+       Scene currentScene = bibliotek.getScene();
+       currentScene.setRoot(root);
+   }
+   public void bytSida(String s) throws IOException {
+       FXMLLoader loader = new FXMLLoader(getClass().getResource(s));
+       Parent root = loader.load();
+       Scene currentScene = bibliotek.getScene();
+       currentScene.setRoot(root);
+   }
 
 
 }

@@ -53,7 +53,7 @@
                                     <Insets right="30.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Label fx:id="bibliotek" onMouseClicked="#hemKnapp" text="Biblioteket" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <Label fx:id="bibliotek" onMouseClicked="#hem" text="Biblioteket" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="28.0" />
                                  </font>
@@ -71,7 +71,7 @@
                                     <Font size="17.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="loggautsak" onMouseClicked="#loggaUtSak" text="Loggaut" underline="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Label fx:id="loggautsak" onMouseClicked="#loggaUt" text="Loggaut" underline="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="17.0" />
                                  </font>

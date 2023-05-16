@@ -43,19 +43,10 @@ public class LånaController extends ControllerController implements Initializab
     private Label KvittoNR;
 
     @FXML
-    public void sökResultat(ActionEvent actionEvent) {
+    public void sökResultat(ActionEvent actionEvent) throws IOException {
+        sökResultat(söktext.getText());
     }
 
-    @FXML
-    public void loggaIn(Event event) {
-        Label label = new Label("Eeeehm ");
-        //ähm det är här eftersom dålig design, måste vara inloggad för att komma hit
-    }
-
-    @Deprecated
-    public void loggaUtSaken(Event event) throws IOException {
-        loggaUt(loggautsak.getScene());
-    }
 
 
 
@@ -67,9 +58,7 @@ public class LånaController extends ControllerController implements Initializab
     }
 
 
-    public void hemKnapp(MouseEvent mouseEvent) throws IOException {
-        hemKnapp(loggautsak.getScene());
-    }
+
 
 
 

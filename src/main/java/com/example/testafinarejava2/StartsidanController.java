@@ -43,26 +43,7 @@ public class StartsidanController extends ControllerController implements Initia
 
     @FXML
     public void sökResultat(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sökresultat.fxml"));
-        Parent root = loader.load();
-        Scene currentScene = sökknapp.getScene();
-        currentScene.setRoot(root);
-        SökresultatController controller = loader.getController();
-        controller.setSöktext(söktext.getText());
-    }
-
-
-
-    @FXML
-    public void loggaIn(Event event) throws IOException {
-        loggaIn(bibliotek.getScene());
-    }
-    @FXML
-    public void loggaUtSak() throws IOException {
-        loggaUt(bibliotek.getScene());
-    }
-    public void hemKnapp() throws IOException {
-        hemKnapp(bibliotek.getScene());
+        sökResultat(söktext.getText());
     }
 
 
@@ -71,9 +52,7 @@ public class StartsidanController extends ControllerController implements Initia
         inloggadFrågetecken(användare, inloggadsom, loggain);
         try {
             setupStaffFeatures();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -97,7 +76,7 @@ public class StartsidanController extends ControllerController implements Initia
 
         styggaknapp.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("styggakunder.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("inteTillbakaLämnade.fxml"));
                 Parent root = loader.load();
                 Scene currentScene = styggaknapp.getScene();
                 currentScene.setRoot(root);
@@ -148,7 +127,5 @@ public class StartsidanController extends ControllerController implements Initia
     }
 
 
-    @FXML
-    public void hemKnapp(Event event) {
-    }
+
 }

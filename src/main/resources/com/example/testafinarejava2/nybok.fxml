@@ -56,7 +56,7 @@
                                     <Insets right="30.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Label fx:id="bibliotek" onMouseClicked="#hemKnapp" text="Biblioteket" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <Label fx:id="bibliotek" onMouseClicked="#hem" text="Biblioteket" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="28.0" />
                                  </font>
@@ -74,7 +74,7 @@
                                     <Font size="17.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="loggautsak" onMouseClicked="#loggautsaken" text="Loggaut" underline="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Label fx:id="loggautsak" onMouseClicked="#loggaUt" text="Loggaut" underline="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
@@ -140,18 +140,9 @@
                         <TextField fx:id="itemtypeText" layoutX="851.0" layoutY="200.0" />
                         <TextField fx:id="itemstatusText" layoutX="851.0" layoutY="405.0" />
                         <TextField fx:id="renttimeText" layoutX="851.0" layoutY="300.0" />
-                        <Button fx:id="idSave" layoutX="574.0" layoutY="100.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="TitleSave" layoutX="574.0" layoutY="200.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="isbnSave" layoutX="574.0" layoutY="300.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="barcodeSave" layoutX="574.0" layoutY="400.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="locationSave" layoutX="574.0" layoutY="500.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="descriptionSave" layoutX="1029.0" layoutY="100.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="itemtypeSave" layoutX="1029.0" layoutY="200.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="renttimeSave" layoutX="1029.0" layoutY="300.0" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="itemstatusSave" layoutX="1029.0" layoutY="405.0" mnemonicParsing="false" text="Save" />
                         <Button fx:id="tillbaka" layoutX="1024.0" layoutY="517.0" mnemonicParsing="false" text="Tillbaka" />
-                        <Button fx:id="Återställ" layoutX="937.0" layoutY="517.0" mnemonicParsing="false" text="Återställ" />
-                        <Button fx:id="läggtill" layoutX="851.0" layoutY="517.0" mnemonicParsing="false" text="Lägg till" onAction="#läggTill" />
+                        <Button fx:id="Återställ" layoutX="937.0" layoutY="517.0" mnemonicParsing="false" text="Återställ" onAction="#återställ" />
+                        <Button fx:id="läggtill" layoutX="851.0" layoutY="517.0" mnemonicParsing="false" onAction="#läggTill" text="Lägg till" />
                      </children>
                   </AnchorPane>
                </children>
