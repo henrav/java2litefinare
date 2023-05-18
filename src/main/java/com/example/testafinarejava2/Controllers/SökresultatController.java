@@ -129,31 +129,29 @@ public class SökresultatController extends ControllerController implements Init
 
 
     @FXML
-    public void sökNågot(ActionEvent actionEvent) {
-        try {
-            removeLastSearch();
-
-            String title = söktext1.getText();
-            ResultSet result = sökBöckerTitel(title);
-
-            if (!result.next()) {
-                visarresultat.setText("Inga resultat");
-                visarresultat.translateXProperty().set(50);
-            } else {
-                visarresultat.setText(title);
-            }
-            visaSökresultat(result);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public void sökNågot(ActionEvent actionEvent) throws SQLException {
+        removeLastSearch();
+        if (söktext1.getText().isBlank()){
+            sökTomt();
+        }else{
+            sökBöckerTitel(söktext1.getText());
         }
     }
 
-    private ResultSet sökBöckerTitel(String titel) throws SQLException {
+    private void sökBöckerTitel(String text) throws SQLException {
         DBconnection.connect();
-        String sql = "SELECT ISBN, MIN(Title) as Title, MIN(First_Name) as First_Name FROM sys.Item JOIN Item_Author ON Item_Author.Item_ID = Item.Item_ID JOIN Author on Author.Author_ID = Item_Author.Author_ID WHERE Title LIKE '%" + titel + "%' GROUP BY ISBN";
-        return DBconnection.executeQuery(sql);
-
+        String sql = "SELECT ISBN, MIN(Title) as Title, MIN(First_Name) as First_Name FROM sys.Item JOIN Item_Author ON Item_Author.Item_ID = Item.Item_ID JOIN Author on Author.Author_ID = Item_Author.Author_ID WHERE Title = ? GROUP BY ISBN";
+        PreparedStatement statement = DBconnection.prepareStatement(sql);
+        statement.setString(1,  text);
+        visaSökresultat(statement.executeQuery());
+        DBconnection.close();
+    }
+    private void sökTomt() throws SQLException {
+        DBconnection.connect();
+        String sql = "SELECT ISBN, MIN(Title) as Title, MIN(First_Name) as First_Name FROM sys.Item JOIN Item_Author ON Item_Author.Item_ID = Item.Item_ID JOIN Author on Author.Author_ID = Item_Author.Author_ID GROUP BY ISBN limit 5";
+        PreparedStatement statement = DBconnection.prepareStatement(sql);
+        visaSökresultat(statement.executeQuery());
+        DBconnection.close();
     }
 
     private void visaSökresultat(ResultSet resultat) throws SQLException {

@@ -6,6 +6,7 @@ import com.example.testafinarejava2.Driver.DBconnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -64,9 +65,12 @@ public class NybokController extends ControllerController implements Initializab
     private Bok bok;
 
     @FXML
-    private TextField författare;
-    @FXML
     private Button läggtill;
+    @FXML
+    private TextField författareFörNamn;
+    @FXML
+    private TextField författareEfterNamn;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inloggadFrågetecken(användare,inloggadsom,loggain);
@@ -83,8 +87,8 @@ public class NybokController extends ControllerController implements Initializab
     public void läggTill() throws SQLException {
         Bok bok = new Bok();
         Author author = new Author();
-        author.setFirstName(författare.getText().trim());
-        author.setLastName(författare.getText().trim() + " " + författare.getText().trim());
+        author.setFirstName(författareFörNamn.getText().trim());
+        author.setLastName(författareEfterNamn.getText().trim());
         bok.setBarcode(barcodeText.getText());
         bok.setNamn(titleText.getText());
         bok.setISBN(isbnText.getText());
@@ -94,10 +98,24 @@ public class NybokController extends ControllerController implements Initializab
         bok.setItemstatus(itemstatusText.getText());
         bok.setRenttime(renttimeText.getText());
         bok.setAuthor(author);
-        DBconnection.addNewBok(bok);
+        try {
+            DBconnection.addNewBok(bok);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bok tillagd");
+            alert.setHeaderText("Boken är tillagd");
+            alert.setContentText("Boken är tillagd");
+            alert.showAndWait();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Bok Inte Tillagd");
+            alert.setHeaderText("Boken är inte tillagd");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
     public void återställ() {
-        författare.setText("");
+        författareEfterNamn.setText("");
+        författareFörNamn.setText("");
         barcodeText.setText("");
         titleText.setText("");
         isbnText.setText("");
@@ -107,6 +125,8 @@ public class NybokController extends ControllerController implements Initializab
         itemstatusText.setText("");
         renttimeText.setText("");
     }
+
+
 
 
 

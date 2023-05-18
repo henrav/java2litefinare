@@ -101,7 +101,7 @@ public class LäggtillController extends ControllerController implements Initial
     public void sättAllData() {
         try {
             DBconnection.connect();
-            String sql = "SELECT Item.Item_ID, Title, ISBN, Barcode, Location, Item.Description, Item_Type, Rent_Time_Weeks, Item_Status, Author.Author_ID, First_Name, Last_Name, Date_Of_Birth, Author.Description FROM sys.Item JOIN Item_Author on Item.Item_ID = Item_Author.Item_ID JOIN Author ON Author.Author_ID = Item_Author.Author_ID";
+            String sql = "SELECT Item.Item_ID, Title, ISBN, Barcode, Location, Item.Description, Item_Type, Rent_Time_Weeks, Item_Status, Author.Author_ID, First_Name, Last_Name, Date_Of_Birth, Author.Description FROM sys.Item JOIN Item_Author on Item.Item_ID = Item_Author.Item_ID JOIN Author ON Author.Author_ID = Item_Author.Author_ID ORDER BY Item_ID ASC";
             ResultSet rs = DBconnection.executeQuery(sql);
             ObservableList<Object> items = FXCollections.observableArrayList();
             int i = 0;

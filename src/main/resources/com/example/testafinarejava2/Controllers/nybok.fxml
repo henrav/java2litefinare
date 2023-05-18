@@ -116,7 +116,7 @@
                               <Shadow />
                            </effect>
                         </ImageView>
-                        <Label layoutX="305.0" layoutY="105.0" prefHeight="17.0" prefWidth="63.0" text="Författare:" />
+                        <Label layoutX="305.0" layoutY="105.0" prefHeight="17.0" prefWidth="63.0" text="FörNamn:" />
                         <Label layoutX="332.0" layoutY="205.0" prefHeight="17.0" prefWidth="30.0" text="Title:" />
                         <Label fx:id="BokensNamn" layoutX="318.0" layoutY="14.0" text="Bokensnam">
                            <font>
@@ -128,7 +128,7 @@
                         <Label layoutX="323.0" layoutY="405.0" text="Barcode:" />
                         <Label layoutX="322.0" layoutY="500.0" text="Location:" />
                         <Label layoutX="769.0" layoutY="103.0" text="Description" />
-                        <TextField fx:id="författare" layoutX="398.0" layoutY="100.0" />
+                        <TextField fx:id="författareFörNamn" layoutX="398.0" layoutY="100.0" />
                         <TextField fx:id="barcodeText" layoutX="398.0" layoutY="400.0" />
                         <Label layoutX="775.0" layoutY="205.0" text="Itemtype:" />
                         <Label layoutX="774.0" layoutY="305.0" text="Renttime:" />
@@ -141,8 +141,10 @@
                         <TextField fx:id="itemstatusText" layoutX="851.0" layoutY="405.0" />
                         <TextField fx:id="renttimeText" layoutX="851.0" layoutY="300.0" />
                         <Button fx:id="tillbaka" layoutX="1024.0" layoutY="517.0" mnemonicParsing="false" text="Tillbaka" />
-                        <Button fx:id="Återställ" layoutX="937.0" layoutY="517.0" mnemonicParsing="false" text="Återställ" onAction="#återställ" />
+                        <Button fx:id="Återställ" layoutX="937.0" layoutY="517.0" mnemonicParsing="false" onAction="#återställ" text="Återställ" />
                         <Button fx:id="läggtill" layoutX="851.0" layoutY="517.0" mnemonicParsing="false" onAction="#läggTill" text="Lägg till" />
+                        <TextField fx:id="författareEfterNamn" layoutX="398.0" layoutY="149.0" />
+                        <Label layoutX="294.0" layoutY="154.0" text="EfterNamn:" />
                      </children>
                   </AnchorPane>
                </children>

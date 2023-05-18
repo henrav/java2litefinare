@@ -215,11 +215,24 @@ public class EditController extends ControllerController implements Initializabl
             if (result.get() == ButtonType.OK){
                 try {
                     deleteBok();
+                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("Delete");
+                    alert1.setHeaderText("Delete");
+                    alert1.setContentText("Boken är nu deletad");
+                    alert1.setOnCloseRequest(event1 -> {
+                        try {
+                            bytSida("läggtill.fxml");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    alert1.showAndWait();
+
                 } catch (SQLException e) {
                     Alert alert2 = new Alert(Alert.AlertType.ERROR);
                     alert2.setTitle("SQL Error");
                     alert2.setHeaderText(null);
-                    alert2.setContentText(e.getMessage());
+                    alert2.setContentText("du kan inte deleta denna bok");
                     alert2.showAndWait();
                 }
             }
@@ -248,7 +261,7 @@ public class EditController extends ControllerController implements Initializabl
 
     public void deleteBok() throws SQLException {
         DBconnection.connect();
-        String sql = "DELETE FROM item WHERE Item_ID = ?";
+        String sql = "DELETE FROM Item, Item_Author USING Item INNER JOIN Item_Author ON Item_Author.Item_ID = Item.Item_ID WHERE Item.Item_ID = ?;";
         PreparedStatement stmt = DBconnection.prepareStatement(sql);
         stmt.setInt(1, Integer.parseInt(getFörstaItemID()));
         stmt.executeUpdate();

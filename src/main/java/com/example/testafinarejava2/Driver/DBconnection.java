@@ -100,7 +100,7 @@ public class DBconnection {
     }
 
     public static void addNewBok(Bok bok) throws SQLException {
-        try {
+
             connect();
             String query = "INSERT INTO Item (Title, ISBN, Barcode, Location, Description, Item_Type, Rent_Time_Weeks, Item_Status) VALUES (?,?,?,?,?,?,?,?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -114,23 +114,13 @@ public class DBconnection {
             preparedStatement.setString(8, bok.getItemstatus());
             preparedStatement.executeUpdate();
 
-            String querytvå = "INSERT INTO Item_Author (Item_ID, Author_ID) VALUES ((SELECT MAX(Item_ID) FROM Item WHERE Title = ?), (SELECT Author_ID FROM Author WHERE First_Name = ? + ' ' + Last_Name = ?))";
+            String querytvå = "INSERT INTO Item_Author VALUES ((SELECT MAX(Item_ID) FROM Item), (SELECT Author_ID FROM Author WHERE First_Name = ? AND Last_Name = ?));";
             PreparedStatement preparedStatementtvå = connection.prepareStatement(querytvå);
-            preparedStatementtvå.setString(1, bok.getNamn());
-            preparedStatementtvå.setString(2, bok.getAuthor().getFirstName());
-            preparedStatementtvå.setString(3, bok.getAuthor().getLastName());
+            preparedStatementtvå.setString(1, bok.getAuthor().getFirstName());
+            preparedStatementtvå.setString(2, bok.getAuthor().getLastName());
             preparedStatementtvå.executeUpdate();
 
-
             close();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Error: " + e.getMessage());
-            alert.showAndWait();
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
-
 
     }
     public static void lånaBok(Bok bok, Integer User_ID) throws SQLException {
